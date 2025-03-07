@@ -1,4 +1,5 @@
 ﻿using BlogProject.Context;
+using BlogProject.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlogProject.Controllers
@@ -23,7 +24,17 @@ namespace BlogProject.Controllers
 		public IActionResult Details(int id)//blog detay sayfası ıcın olusturuldu parametre verdık cunku her blogun ıd sı farklı olacak
 		{
 			var blog = _context.Blogs.Where(x => x.Id == id).FirstOrDefault();//veritabanından ıd ye gore blogu cekıyoruz .FirstOrDefault() bir tane demektir
+			var comment = _context.Comments.Where(x => x.BlogId == id).ToList();//verıtabanına erıstık ve yorumları cekmek ıcın where sorgusu yazıldı
+			ViewBag.Comments = comment;//yorumları viewbag ıcınde tutuyoruz ViewBag veri tasımaya yarar
 			return View(blog);
+		}
+		[HttpPost]//http post metodu olusturuldu ve bunun anlamı veritanına veri ekleyecegımızı belırtır
+		public IActionResult CreateComment(Comment model)//yorum ekleme metodu olusturuldu parantez ıcınde parametrelerı belırtırsek kod calısır
+		{
+			model.PublishDate = DateTime.Now;//yorumun ne zaman olusturuldugunu belırtmek ıcın datetime.now metodu kullanılır
+			_context.Comments.Add(model);//yorumları listeye eklemek ıcın olusturulan metodu cagırıyoruz
+			_context.SaveChanges();//veritabanına kaydetmek ıcın savechanges metodu cagırılır
+			return RedirectToAction("Details", new { id = model.BlogId });//yorum eklendıgınde detay sayfasına yonlendırme yapılır
 		}
 	}
 }

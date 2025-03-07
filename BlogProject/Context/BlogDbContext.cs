@@ -13,5 +13,6 @@ namespace BlogProject.Context
 			optionsBuilder.UseSqlServer("Data Source = .; Database = BlogDb; Integrated Security = true; TrustServerCertificate = True;");
 		}
 		public DbSet<Blog> Blogs { get; set; }//veritabanında ki adını burada belirtip hangi tabloya baglanacagını belirtiyoruz
+		public DbSet<Comment> Comments { get; set; }//veritabanında ki adını burada belirtip hangi tabloya baglanacagını belirtiyoruz
 	}
 }
