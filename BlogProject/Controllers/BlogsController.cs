@@ -37,9 +37,27 @@ namespace BlogProject.Controllers
 			_context.Comments.Add(model);//yorumları listeye eklemek ıcın olusturulan metodu cagırıyoruz
 			var blog = _context.Blogs.Where(x => x.Id == model.BlogId).FirstOrDefault();//blog ıd sıne gore blogu cekmek ıcın where sorgusu yazıldı yorum yapılacak blogu bulmak ıcın
 			blog.CommentCount += 1;//yorum sayısını arttırmak ıcın arttırma ıslemı yapılır
-
-			_context.SaveChanges();//veritabanına kaydetmek ıcın savechanges metodu cagırılır
+			_context.SaveChanges();
 			return RedirectToAction("Details", new { id = model.BlogId });//yorum eklendıgınde detay sayfasına yonlendırme yapılır
+		}
+		public IActionResult About()//hakkımızda sayfası ıcın olusturuldu
+		{
+			return View();
+		}
+		public IActionResult Contact()//ıletısım sayfası ıcın olusturuldu
+		{
+			return View();
+		}
+		public IActionResult CreateContact(Contact model)//ıletısım sayfasından gelen verilerı almak ıcın olusturuldu
+		{
+			model.CreatedAt = DateTime.Now;//veritabanına eklenen verinin ne zaman eklendıgını belırtmek ıcın datetime.now metodu kullanılır
+			_context.Contacts.Add(model);//veritabanına veri eklemek ıcın olusturulan metodu cagırıyoruz
+			_context.SaveChanges();
+			return RedirectToAction("Index");//ıletısım sayfasına yonlendırme yapılır
+		}
+		public IActionResult Support()//destek sayfası ıcın olusturuldu
+		{
+			return View();
 		}
 	}
 }

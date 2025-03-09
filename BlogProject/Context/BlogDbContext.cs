@@ -14,5 +14,6 @@ namespace BlogProject.Context
 		}
 		public DbSet<Blog> Blogs { get; set; }//veritabanında ki adını burada belirtip hangi tabloya baglanacagını belirtiyoruz
 		public DbSet<Comment> Comments { get; set; }//veritabanında ki adını burada belirtip hangi tabloya baglanacagını belirtiyoruz
+		public DbSet<Contact> Contacts { get; set; }//veritabanında ki adını burada belirtip hangi tabloya baglanacagını belirtiyoruz
 	}
 }
