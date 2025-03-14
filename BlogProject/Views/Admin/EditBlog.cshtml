@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 @*burada blogların admin tarafından detaylarının goruntulenmesını sagladık*@
-
+@*required eklendi yani tamam dese bile bu alanlar dolmadan ıslem olmayacaktır*@
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Blog Duzenle</h1>
@@ -17,21 +17,21 @@
     <div class="form-group">
         <input type="text" class="form-control form-control-user"
                id="blogname" aria-describedby="blogname"
-               placeholder="Baslik Giriniz..." value="@Model.Name">
+               placeholder="Baslik Giriniz..." value="@Model.Name" required>
     </div>
     <div class="form-group">
         <input type="text" class="form-control form-control-user"
                id="blogimageurl" aria-describedby="blogimageurl"
-               placeholder="Fotograf Url'sini Giriniz..." value="@Model.ImageUrl">
+               placeholder="Fotograf Url'sini Giriniz..." value="@Model.ImageUrl" required>
     </div>
     <div class="form-group">
         <textarea type="text" class="form-control form-control-user"
-                  id="blogdescription" placeholder="Aciklama Ekleyiniz">@Model.Description</textarea>
+                  id="blogdescription" placeholder="Aciklama Ekleyiniz" required>@Model.Description</textarea>
     </div>
     <div class="form-group">
         <input type="text" class="form-control form-control-user"
                id="blogtags" aria-describedby="blogtags"
-               placeholder="Etiketleri Giriniz..." value="@Model.Tags">
+               placeholder="Etiketleri Giriniz..." value="@Model.Tags" required>
     </div>
     <a href="#" class="btn btn-success btn-icon-split">
         <span class="icon text-white-50">
@@ -39,7 +39,8 @@
         </span>
         <span class="text">Kaydet</span>
     </a>
-    <a href="#" class="btn btn-danger btn-icon-split">
+    @*burada silme islemi icin yonlendırme yapıldı*@
+    <a href="/Admin/DeleteBlog?id=@Model.Id" class="btn btn-danger btn-icon-split">
         <span class="icon text-white-50">
             <i class="fas fa-trash"></i>
         </span>
@@ -51,7 +52,7 @@
         </span>
         <span class="text">Yorumlarini Gor</span>
     </a>
-    <a href="#" class="btn btn-secondary btn-icon-split">
+    <a href="/Admin/Blogs" class="btn btn-secondary btn-icon-split">
         <span class="icon text-white-50">
             <i class="fas fa-arrow-right"></i>
         </span>
@@ -59,7 +60,8 @@
     </a>
     @if(Model.Status==1)
     {
-        <a href="#" class="btn btn-warning btn-icon-split">
+        //blog aciksa kapat butonu gorunur ve yapılan islemden sonra gıtmesı gereken yere yonlendırme yaptırdık
+        <a href="/Admin/ToggleStatus?id=@Model.Id" class="btn btn-warning btn-icon-split">
             <span class="icon text-white-50">
                 <i class="fas fa-exclamation-triangle"></i>
             </span>
@@ -67,7 +69,7 @@
         </a>
     }
     else{
-        <a href="#" class="btn btn-primary btn-icon-split">
+        <a href="/Admin/ToggleStatus?id=@Model.Id" class="btn btn-primary btn-icon-split">
             <span class="icon text-white-50">
                 <i class="fas fa-flag"></i>
             </span>
