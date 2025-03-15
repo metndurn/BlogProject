@@ -32,8 +32,8 @@ namespace BlogProject.Controllers
 		{
 			var blog = _context.Blogs.Where(x => x.Id == id).FirstOrDefault();//blog ıd sıne gore blogu cekmek ıcın where sorgusu yazıldı
 			_context.Blogs.Remove(blog);//blogu sıldık
-			_context.SaveChanges();//degısıklıklerı kaydettık
-			return RedirectToAction("Blogs");//blogları gosteren sayfaya yonlendırdık
+			_context.SaveChanges();
+			return RedirectToAction("Blogs");
 		}
 
 		//edit post islemi
@@ -61,7 +61,7 @@ namespace BlogProject.Controllers
 				blog.Status = 1;//degılse blogun durumunu 1 yap
 			}
 			_context.SaveChanges();
-			return RedirectToAction("Blogs");//blogları gosteren sayfaya yonlendırdık
+			return RedirectToAction("Blogs");
 		}
 		public IActionResult CreateBlog()//blog ekleme sayfası ıcın olusturuldu
 		{
@@ -72,10 +72,31 @@ namespace BlogProject.Controllers
 		{
 			model.PublishDate = DateTime.Now;//blogun ne zaman olusturuldugunu belırtmek ıcın datetime.now metodu kullanılır
 			model.Status = 1;//blogun durumunu belırtmek ıcın 1 yazdık
-			_context.Blogs.Add(model);//blogu listeye eklemek ıcın olusturulan metodu cagırıyoruz
+			_context.Blogs.Add(model);
 			_context.SaveChanges();
-			return RedirectToAction("Blogs");//blogları gosteren sayfaya yonlendırdık
+			return RedirectToAction("Blogs");
 		}
-
+		public IActionResult Comments(int? blogId)//butun yorumları ıstıyorum
+		{
+			/*bos liste olusturup sıfıra esitledik if ile kosul olusturup veritabanına
+			 hem kayıt yaptı hemde ekranda gosterdık*/
+			var comments = new List<Comment>();
+			if (blogId == null)
+			{
+				comments = _context.Comments.ToList();
+			}
+			else
+			{
+				comments = _context.Comments.Where(x => x.BlogId == blogId).ToList();
+			}
+			return View(comments);
+		}
+		public IActionResult DeleteComment(int id)//yorumu sılmek ıcın olusturuldu
+		{
+			var comment = _context.Comments.Where(x => x.Id == id).FirstOrDefault();
+			_context.Comments.Remove(comment);
+			_context.SaveChanges();
+			return RedirectToAction("Comments");
+		}
 	}
 }
