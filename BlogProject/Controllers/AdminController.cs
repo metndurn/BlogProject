@@ -63,5 +63,19 @@ namespace BlogProject.Controllers
 			_context.SaveChanges();
 			return RedirectToAction("Blogs");//blogları gosteren sayfaya yonlendırdık
 		}
+		public IActionResult CreateBlog()//blog ekleme sayfası ıcın olusturuldu
+		{
+			return View();
+		}
+		[HttpPost]//veritabanına veri eklemek ıcın kullanılır
+		public IActionResult CreateBlog(Blog model)//blog turunden model belırttık
+		{
+			model.PublishDate = DateTime.Now;//blogun ne zaman olusturuldugunu belırtmek ıcın datetime.now metodu kullanılır
+			model.Status = 1;//blogun durumunu belırtmek ıcın 1 yazdık
+			_context.Blogs.Add(model);//blogu listeye eklemek ıcın olusturulan metodu cagırıyoruz
+			_context.SaveChanges();
+			return RedirectToAction("Blogs");//blogları gosteren sayfaya yonlendırdık
+		}
+
 	}
 }

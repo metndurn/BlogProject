@@ -1,0 +1,51 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@*burada blogların admin tarafından detaylarının goruntulenmesını sagladık*@
+@*required eklendi yani tamam dese bile bu alanlar dolmadan ıslem olmayacaktır*@
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Blog Ekle</h1>
+    <a href="/Admin/CreateBlog" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <i class="fas fa-download fa-sm text-white-50"></i> Blog Ekle
+    </a>
+</div>
+<!--form icinde yolunu belirttik ve verı gonderecek ve id ekledik gidip esitlensin diye-->
+<form action="/Admin/CreateBlog" method="post" id="createblogform">
+   
+    <div class="form-group">
+        <input type="text" class="form-control form-control-user"
+               id="blogname" aria-describedby="blogname"
+               placeholder="Baslik Giriniz..." required name="Name">
+    </div>
+    <div class="form-group">
+        <input type="text" class="form-control form-control-user"
+               id="blogimageurl" aria-describedby="blogimageurl"
+               placeholder="Fotograf Url'sini Giriniz..." required name="ImageUrl">
+    </div>
+    <div class="form-group">
+        <textarea type="text" class="form-control form-control-user"
+                  id="blogdescription" placeholder="Aciklama Ekleyiniz" required name="Description" rows="10"></textarea>
+    </div>
+    <div class="form-group">
+        <input type="text" class="form-control form-control-user"
+               id="blogtags" aria-describedby="blogtags"
+               placeholder="Etiketleri Giriniz..."  required name="Tags">
+    </div>
+  
+    <button type="submit" class="btn btn-success btn-icon-split">
+        <span class="icon text-white-50">
+            <i class="fas fa-check"></i>
+        </span>
+        <span class="text">Ekle</span>
+    </button>
+   
+    <a href="/Admin/Blogs" class="btn btn-secondary btn-icon-split">
+        <span class="icon text-white-50">
+            <i class="fas fa-arrow-right"></i>
+        </span>
+        <span class="text">Geri Don</span>
+    </a>
+   
+
+</form>
