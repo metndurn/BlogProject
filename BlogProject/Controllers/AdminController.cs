@@ -98,5 +98,9 @@ namespace BlogProject.Controllers
 			_context.SaveChanges();
 			return RedirectToAction("Comments");
 		}
+		public IActionResult Register()//kullanıcı kayıt sayfası ıcın olusturuldu
+		{
+			return View();
+		}
 	}
 }
