@@ -1,5 +1,8 @@
 ﻿using BlogProject.Context;
+using BlogProject.Identity;
 using BlogProject.Models;
+using BlogProject.Models.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlogProject.Controllers
@@ -8,6 +11,7 @@ namespace BlogProject.Controllers
 	{
 		//burada veritabanına baglanıp asagıda cözuyoruz
 		private readonly BlogDbContext _context;
+		private readonly UserManager<BlogIdentityUser> _userManager;
 
 		public AdminController(BlogDbContext context)//baglanan verıtabanı cozumlenır
 		{
@@ -101,6 +105,33 @@ namespace BlogProject.Controllers
 		public IActionResult Register()//kullanıcı kayıt sayfası ıcın olusturuldu
 		{
 			return View();
+		}
+		[HttpPost]//veritabanına veri eklemek ıcın kullanılır
+		public async Task<IActionResult>  Register(RegisterViewModel model)
+		{
+			if (model.Password==model.RePassword)
+			{
+				var user = new BlogIdentityUser
+				{
+					Name = model.Name,
+					UserName = model.Email,
+					Email = model.Email
+				};
+				var result = await _userManager.CreateAsync(user, model.Password); /*.Result;*/
+				if (result.Succeeded)
+				{
+					return RedirectToAction("Index");
+				}
+				else
+				{
+					return View();
+				}
+
+			}
+			else
+			{
+				return View();
+			}
 		}
 	}
 }
