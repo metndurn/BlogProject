@@ -26,7 +26,7 @@ builder.Services.AddDbContext<BlogIdentityDbContext>(options =>
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-		options.LoginPath = "/Blogs/Login";
+		options.LoginPath = "Blogs/Index";
 	});
 
 builder.Services.AddIdentity<BlogIdentityUser,BlogIdentityRole>()

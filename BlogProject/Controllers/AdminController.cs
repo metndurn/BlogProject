@@ -11,11 +11,12 @@ namespace BlogProject.Controllers
 	{
 		//burada veritabanına baglanıp asagıda cözuyoruz
 		private readonly BlogDbContext _context;
-		private readonly UserManager<BlogIdentityUser> _userManager;
+		private readonly UserManager<BlogIdentityUser> _userManager;//bunu eklerken eksık ekledım dıye hata aldım suan ıcın halledildi
 
-		public AdminController(BlogDbContext context)//baglanan verıtabanı cozumlenır
+		public AdminController(BlogDbContext context, UserManager<BlogIdentityUser> userManager)//baglanan verıtabanı cozumlenır
 		{
 			_context = context;
+			_userManager = userManager;//baglanan verıtabanı cozumlenır
 		}
 
 		public IActionResult Index()
@@ -109,15 +110,17 @@ namespace BlogProject.Controllers
 		[HttpPost]//veritabanına veri eklemek ıcın kullanılır
 		public async Task<IActionResult>  Register(RegisterViewModel model)
 		{
-			if (model.Password==model.RePassword)
+			if (model.Password == model.RePassword)
 			{
 				var user = new BlogIdentityUser
-				{
+				{//hata kodun burada olustu ve username ekleyıp burayı duzelttık
 					Name = model.Name,
+					Surname = model.Surname,
+					Email = model.Email,
 					UserName = model.Email,
-					Email = model.Email
 				};
-				var result = await _userManager.CreateAsync(user, model.Password); /*.Result;*/
+				//hatalı alandır
+				var result = await _userManager.CreateAsync(user, model.Password);
 				if (result.Succeeded)
 				{
 					return RedirectToAction("Index");
@@ -126,7 +129,6 @@ namespace BlogProject.Controllers
 				{
 					return View();
 				}
-
 			}
 			else
 			{

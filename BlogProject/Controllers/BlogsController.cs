@@ -59,5 +59,9 @@ namespace BlogProject.Controllers
 		{
 			return View();
 		}
+		public IActionResult Login()//gırıs sayfası ıcın olusturuldu
+		{
+			return View();
+		}
 	}
 }
