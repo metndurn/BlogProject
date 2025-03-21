@@ -1,5 +1,7 @@
 ﻿using BlogProject.Context;
+using BlogProject.Identity;
 using BlogProject.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlogProject.Controllers
@@ -8,10 +10,14 @@ namespace BlogProject.Controllers
 	{
 		//veri tabanı baglantısı olusturuldu
 		private readonly BlogDbContext _context;
+		private readonly UserManager<BlogIdentityUser> _userManager;//kullanıcı bır maıl gonderdıgın var mı yok mu dıye kontrol etmek ıcın kullandık varsa login islemleri olacak
+		private readonly SignInManager<BlogIdentityUser> _signInManager;//kullanıcı gırıs yaptıgında otomatık olarak gırıs yapacak
 
-		public BlogsController(BlogDbContext context)//alınan verıtabanı baglantısı ıcın constructor olusturuldu
+		public BlogsController(BlogDbContext context, UserManager<BlogIdentityUser> userManager,SignInManager<BlogIdentityUser> signInManager)//alınan verıtabanı baglantısı ıcın constructor olusturuldu
 		{
 			_context = context;
+			_userManager = userManager;
+			_signInManager = signInManager;
 		}
 
 		public IActionResult Index()//blog anasayfası ıcın liste olusturuldu
@@ -62,6 +68,11 @@ namespace BlogProject.Controllers
 		public IActionResult Login()//gırıs sayfası ıcın olusturuldu
 		{
 			return View();
+		}
+		[HttpPost]//veritabanı baglantısı olmayacak sadece kontrol amaclı olacak
+		public IActionResult Login(LoginViewModel)//gırıs yapmak ıcın olusturuldu
+		{
+			return RedirectToAction("Index");
 		}
 	}
 }
