@@ -70,9 +70,24 @@ namespace BlogProject.Controllers
 			return View();
 		}
 		[HttpPost]//veritabanı baglantısı olmayacak sadece kontrol amaclı olacak
-		public IActionResult Login(LoginViewModel)//gırıs yapmak ıcın olusturuldu
+		public async Task<IActionResult> Login(LoginViewModel model)//gırıs yapmak ıcın olusturuldu
 		{
-			return RedirectToAction("Index");
+			var user = await _userManager.FindByEmailAsync(model.Email);//kullanıcı var mı yok mu dıye kontrol etmek ıcın olusturulan metodu cagırıyoruz
+			if (user == null)
+			{
+				return View();//kullanıcı yoksa gırıs yapamaz varsa giris yapsın
+			}
+			var result = await _signInManager.PasswordSignInAsync(user, model.Password, true, false);//kullanıcı varsa sıfre kontrolu yapılır
+
+			if (result.Succeeded)
+			{
+				return RedirectToAction("Index", "Admin");
+			}
+			else
+			{
+				return View();
+			}
+
 		}
 	}
 }
