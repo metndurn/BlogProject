@@ -26,7 +26,7 @@ builder.Services.AddDbContext<BlogIdentityDbContext>(options =>
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-		options.LoginPath = "Blogs/Index";
+		options.LoginPath = "/Blogs/Login";//gýrýs yapmadýgýnda yonlendýrmek ýcýn kullanýlýr ekstra islem olarak ýndex sýlýnýp logýn yazýldý
 	});
 
 builder.Services.AddIdentity<BlogIdentityUser,BlogIdentityRole>()
@@ -48,10 +48,11 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Admin}/{action=Index}/{id?}");
+    pattern: "{controller=Blogs}/{action=Index}/{id?}");
 
 app.Run();

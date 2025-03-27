@@ -2,21 +2,25 @@
 using BlogProject.Identity;
 using BlogProject.Models;
 using BlogProject.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlogProject.Controllers
 {
+	[Authorize]//sadece yetkili kısılerın gırebılecegı alanlar ıcın kullanılır
 	public class AdminController : Controller
 	{
 		//burada veritabanına baglanıp asagıda cözuyoruz
 		private readonly BlogDbContext _context;
 		private readonly UserManager<BlogIdentityUser> _userManager;//bunu eklerken eksık ekledım dıye hata aldım suan ıcın halledildi
+		private readonly SignInManager<BlogIdentityUser> _signInManager;
 
-		public AdminController(BlogDbContext context, UserManager<BlogIdentityUser> userManager)//baglanan verıtabanı cozumlenır
+		public AdminController(BlogDbContext context, UserManager<BlogIdentityUser> userManager, SignInManager<BlogIdentityUser> signInManager)//baglanan verıtabanı cozumlenır
 		{
 			_context = context;
 			_userManager = userManager;//baglanan verıtabanı cozumlenır
+			_signInManager = signInManager;
 		}
 
 		public IActionResult Index()
@@ -134,6 +138,11 @@ namespace BlogProject.Controllers
 			{
 				return View();
 			}
+		}
+		public async Task<IActionResult> Logout()//task olarak gonderme yaptık
+		{
+			await _signInManager.SignOutAsync();
+			return RedirectToAction("Index", "Blogs");
 		}
 	}
 }
