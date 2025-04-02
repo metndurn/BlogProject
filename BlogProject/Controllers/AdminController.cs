@@ -25,7 +25,32 @@ namespace BlogProject.Controllers
 
 		public IActionResult Index()
 		{
-			return View();
+			var dashboard = new DashboardViewModel();//dashboard viewmodel olusturuldu
+
+			var toplamblogsayisi = _context.Blogs.Count();//blog sayısını cekmek ıcın count metodu kullanılır
+			var toplamgoruntulenmesayisi = _context.Blogs.Sum(x => x.ViewCount);//goruntulenme sayısını cekmek ıcın sum metodu kullanılır
+			var encokgoruntulenenblog = _context.Blogs.OrderByDescending(x => x.LikeCount).FirstOrDefault();//encokgoruntulenenblog cekmek ıcın orderbydescending metodu kullanılır
+			var ensonyayinlananblog = _context.Blogs.OrderByDescending(x => x.PublishDate).FirstOrDefault();//ensonyayinlananblog cekmek ıcın orderbydescending metodu kullanılır
+			var toplamyorumsayisi = _context.Comments.Count();//yorum sayısını cekmek ıcın count metodu kullanılır
+			var encokyorumalanblogId = _context.Comments
+				.GroupBy(x=>x.BlogId)
+				.OrderByDescending(x=>x.Count())
+				.Select(x => x.Key)
+				.FirstOrDefault();//encokyorumalanblogId cekmek ıcın groupby metodu kullanılır
+
+			var encokyorumalanblog = _context.Blogs.Where(x => x.Id == encokyorumalanblogId).FirstOrDefault();//encokyorumalanblog cekmek ıcın where sorgusu yazılır
+			var bugunyapilanyorumsayisi = _context.Comments.Where(x => x.PublishDate.Date == DateTime.Now.Date).Count();//bugunyapilanyorumsayisi cekmek ıcın where sorgusu yazılır
+
+
+			dashboard.TotalBlogCount = toplamblogsayisi;
+			dashboard.TotalViewCount = toplamgoruntulenmesayisi;
+			dashboard.MostViewedBlog = encokgoruntulenenblog;
+			dashboard.LatestBlog = ensonyayinlananblog;
+			dashboard.TotalCommentCount = toplamyorumsayisi;
+			dashboard.MostCommentedBlog = encokyorumalanblog;
+			dashboard.TodayCommentCount = bugunyapilanyorumsayisi;
+
+			return View(dashboard);
 		}
 		public IActionResult Blogs()//butun blogları ıstıyorum
 		{
@@ -143,6 +168,11 @@ namespace BlogProject.Controllers
 		{
 			await _signInManager.SignOutAsync();
 			return RedirectToAction("Index", "Blogs");
+		}
+		public IActionResult Contact()
+		{
+			var contact = _context.Contacts.ToList();
+			return View(contact);
 		}
 	}
 }

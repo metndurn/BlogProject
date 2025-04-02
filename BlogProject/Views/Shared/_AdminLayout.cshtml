@@ -103,6 +103,28 @@
                     </div>
                 </div>
             </li>
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Iletisim
+            </div>
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <!-- Nav icinde CollapseBlog ekledık -->
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseContact"
+                   aria-expanded="true" aria-controls="collapseContact">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Iletisim</span>
+                </a>
+                <div id="collapseContact" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Iletisim Islemleri:</h6>
+                        <a class="collapse-item" href="/Admin/Contact">Iletisimlerimiz</a>
+                        @* <a class="collapse-item" href="#">Yorum Duzenleme</a> *@
+                    </div>
+                </div>
+            </li>
         </ul>
         <!-- End of Sidebar -->
         <!-- Content Wrapper -->
@@ -302,7 +324,7 @@
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
+                                    Cikis Yap
                                 </a>
                             </div>
                         </li>
@@ -336,15 +358,15 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Admin Panelden Cikis Yapıyorsunuz?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-body">Cikis Yapiyorsunuz Onayliyor Musunuz..:</div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="/Admin/Logout">Logout</a>@*cıkıs ıcın lınk verıldı*@
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Hayır</button>
+                    <a class="btn btn-primary" href="/Admin/Logout">Onayliyorum</a>@*cıkıs ıcın lınk verıldı*@
                 </div>
             </div>
         </div>
